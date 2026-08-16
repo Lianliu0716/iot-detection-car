@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+tfod/
+
+# 資料庫與執行時產物
+*.sqlite3
+*.db
+captures/
+
+# 壓縮檔
+*.zip
+*.rar
+*.7z
+
+# clone 別人的教學 repo，不要放進來
+TFODCourse/
+
+# 作業系統
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 期末報告含組員個資，不進版控
+物聯網.pdf

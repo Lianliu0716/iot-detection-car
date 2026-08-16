@@ -1,0 +1,119 @@
+#pcar
+import RPi.GPIO as GPIO
+import time
+import readchar
+
+
+Motor_R1_Pin = 16
+Motor_R2_Pin = 18
+Motor_L1_Pin = 13#11
+Motor_L2_Pin = 11#13
+t = 0.1
+dc = 50
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(Motor_R1_Pin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(Motor_R2_Pin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(Motor_L1_Pin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(Motor_L2_Pin, GPIO.OUT, initial=GPIO.LOW)
+
+pwm_r1 = GPIO.PWM(Motor_R1_Pin, 500)
+pwm_r2 = GPIO.PWM(Motor_R2_Pin, 500)
+pwm_l1 = GPIO.PWM(Motor_L1_Pin, 500)
+pwm_l2 = GPIO.PWM(Motor_L2_Pin, 500)
+pwm_r1.start(0)
+pwm_r2.start(0)
+pwm_l1.start(0)
+pwm_l2.start(0)
+
+def turnleft_90():#左轉90度
+    pwm_r1.ChangeDutyCycle(100)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(0)
+    pwm_l2.ChangeDutyCycle(0)
+    time.sleep(0.53)
+    stop()
+
+def turnright_90():#右轉90度
+    pwm_r1.ChangeDutyCycle(0)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(100)
+    pwm_l2.ChangeDutyCycle(0)
+    time.sleep(0.53)
+    stop()
+
+def stop():
+    pwm_r1.ChangeDutyCycle(0)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(0)
+    pwm_l2.ChangeDutyCycle(0)
+
+def forward():
+    pwm_r1.ChangeDutyCycle(dc)
+    pwm_l1.ChangeDutyCycle(dc)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l2.ChangeDutyCycle(0)
+    time.sleep(t)
+    stop()
+
+def backward():
+    pwm_r1.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(0)
+    pwm_r2.ChangeDutyCycle(dc)
+    pwm_l2.ChangeDutyCycle(dc)
+    time.sleep(t)
+    stop()
+
+def turnLeft():
+    pwm_r1.ChangeDutyCycle(dc)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(0)
+    pwm_l2.ChangeDutyCycle(0)
+    time.sleep(t)
+    stop()
+
+def turnRight():
+    pwm_r1.ChangeDutyCycle(0)
+    pwm_r2.ChangeDutyCycle(0)
+    pwm_l1.ChangeDutyCycle(dc)
+    pwm_l2.ChangeDutyCycle(0)
+    time.sleep(t)
+    stop()
+
+
+def cleanup():
+    stop()
+    pwm_r1.stop()
+    pwm_r2.stop()
+    pwm_l1.stop()
+    pwm_l2.stop()
+    GPIO.cleanup()
+
+if __name__ == "__main__":
+
+    print("Press 'q' to quit...")
+
+    while True:
+        ch = readchar.readkey()
+
+        if ch == 'w':
+            forward()
+
+        elif ch == 's':
+            backward()
+
+        elif ch == 'd':
+            turnRight()
+
+        elif ch == 'a':
+            turnLeft()
+
+        elif ch=='r':
+             forward()
+             forward()
+
+        elif ch == 'q':
+            print("\nQuit")
+            cleanup()
+            quit()

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOT</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        table thead tr {
+            background-color: #006f98;
+            color: #ffffff;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        table tbody tr:last-of-type {
+            border-bottom: 2px solid #006f98;
+        }
+
+        table tbody tr.active-row {
+            font-weight: bold;
+            color: #006f98;
+        }
+        
+    </style>
+</head>
+
+<body>
+   <h1>自走車行走紀錄</h1>
+   <h2>direction:</h2>
+   <ul>
+        <li>0: 左轉</li>
+        <li>1: 右轉</li>
+        <li>2: 抵達終點</li>
+   </ul>
+   <hr>
+    <table cellspacing="0">
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Now time</th>
+              <th>Spend time</th>
+              <th>direction</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sqlite in posts %}
+            <tr>
+               <td>{{ sqlite.id }}</td>
+               <td>{{ sqlite.nowtime }}</td>
+               <td>{{ sqlite.seconds }}</td>
+               <td>{{ sqlite.detectid }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   
+</body>
+</html>
